@@ -1,0 +1,57 @@
+{% block body %}
+
+ <div class="col-xl-12">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Item Categories</h4>
+        </div>
+        <div class="card-body" id="itemcategories-container">
+            <div class="category-type">
+                <ul>
+                    {% for itemcategory in itemcategories %}
+                    <li>
+                        <div class="left-category">
+                            <span class="category-icon"><i class="bg-purple-500 fi fi-rr-usd-circle"></i> {{ itemcategory.nameitemcategory }}</span>
+                        </div>
+                        <div class="right-category">
+                                <span><a href="{{ path('app_itemcategory_edit', {'iditemcategory': itemcategory.iditemcategory}) }}" style="color:inherit; text-decoration:none;"><i class="fi fi-rs-pencil"></i></a></span>
+                                <span><a href="{{ path('app_itemcategory_show', {'iditemcategory': itemcategory.iditemcategory}) }}" style="color:inherit; text-decoration:none;"><i class="fi fi-rr-eye"></i></a></span>
+                                <span>{{ include('itemcategory/_delete_form.html.twig', { 'itemcategory': itemcategory }) }}</span>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {{ knp_pagination_render(itemcategories) }}
+            </div>
+         </div>
+    </div>
+    <div class="add-goals-link">
+         <h5 class="mb-0">Add new category</h5>
+         <a href="{{ path('app_itemcategory_new') }}">
+             <i class="fi fi-rr-square-plus"></i>
+         </a>
+    </div>
+</div>  
+
+
+
+<script>
+        $(document).ready(function(){
+            $(document).on('click', '#itemcategories .pagination a', function(event){
+                event.preventDefault();
+                var page = $(this).attr('href').split('page=')[1];
+                fetchItemCategories(page);
+            });
+
+            function fetchItemCategories(page) {
+                $.ajax({
+                    url: '{{ path('app_wishlist_index') }}?page=' + page,
+                    type: 'GET',
+                    success: function(data) {
+                        $('#itemcategories-container').html(data);
+                    }
+                });
+            }
+        });
+    </script>
+{% endblock %}

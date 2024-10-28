@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello GoogleAuthController!{% endblock %}
+
+{% block body %}
+<div class="single-content">
+    <div class="blog-img">
+        <img src="{{ asset('images/blog/' ~ blog.blogImage) }}" alt="image">
+    </div>
+    <div class="date">
+                            <p class="date">{{blog.datePublished ? blog.datePublished|date('Y-m-d') : ''}}</p>
+     </div>
+  </div>
+    <div class="single-content mb-60">
+        <h2 class="title">{{blog.title}}</h2>
+    </div>
+     <div class="single-content">
+            <h3 class="title">Content</h3>
+            <p>{{blog.content}}</p>
+    </div>
+
+{% endblock %}
+{% block css %}
+ <link rel="stylesheet" href="{{asset('css/style.css')}}">
+ <link rel="stylesheet" href="{{asset('css/style1.css')}}">
+ <link rel="stylesheet" href="{{asset('vendor/toastr/toastr.min.css')}}">
+{% endblock %}
+
+{% block js %}
+ <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
+    <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <!--  -->
+    <!--  -->
+    <script src="{{asset('js/scripts.js')}}"></script>
+    <script>
+    $(document).ready(function() {
+        $('#signup-button').click(function() {
+            $('form').submit();
+        });
+    });
+</script>
+{% endblock %}

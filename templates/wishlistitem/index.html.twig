@@ -1,0 +1,82 @@
+{% block body %}
+
+<div class="col-xl-12" id="wishlist-items">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Items </h4>
+                </div>
+                <div class="card-body">                
+                    <div class="transaction-table">
+                        <div class="table-responsive">
+                            <table class="table mb-0 table-responsive-sm " id="wishlist-items-table" >
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Price</th>
+                                        <th>Creation date</th>
+                                        <th>Priority</th>
+                                        <th>Status</th>
+                                        <th>Progress</th>
+                                        <th>Management</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                                
+                            </table>
+                            {{ knp_pagination_render(itemcategories) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="add-goals-link">
+                     <h5 class="mb-0" >Add new Item</h5>
+                     <a href="{{ path('app_wishlistitem_new') }}">
+                         <i class="fi fi-rr-square-plus"></i>
+                     </a>
+                </div>
+
+                
+            </div>
+ </div> 
+
+                                    
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+    // Function to sort table rows based on the status column
+    function sortTable() {
+        var table = $('#wishlist-table');
+        var rows = table.find('tr:not(:first-child)').toArray(); // Exclude the first row (header row)
+
+        // Define the priority order
+        var statusOrder = {
+            'IN_PROGRESS': 3,
+            'NOT_STAETED': 2,
+            'DONE': 1
+        };
+
+        rows.sort(function(a, b) {
+            var statusA = $(a).find('td:eq(4)').text().trim(); // Assuming status is in the fifth column (index 4)
+            var statusB = $(b).find('td:eq(4)').text().trim(); // Adjust if status is in a different column
+
+            return (statusOrder[statusB] || 0) - (statusOrder[statusA] || 0); // Sort in descending order
+        });
+
+        $.each(rows, function(index, row) {
+            table.append(row);
+        });
+    }
+    // Replace the word "DONE" with the checkmark icon
+    $('#wishlist-table td').filter(function() {
+        return $(this).text().trim() === 'DONE';
+    }).html('&#10003;');
+
+    // Call the sortTable function when the document is ready
+    sortTable();
+});
+
+</script>
+
+        
+{% endblock %}
